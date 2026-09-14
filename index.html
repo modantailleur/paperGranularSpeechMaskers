@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GranSpeechMask — Companion Page</title>
+<meta name="description" content="Companion page for 'Low Latency Intelligibility Reduction of Distracting Conversations Using Granular Speech Maskers': audio examples, code, and dataset links.">
+<meta property="og:title" content="GranSpeechMask — Companion Page">
+<meta property="og:description" content="Audio examples, code, and dataset for the GranSpeechMask paper on low-latency granular speech masking.">
+<meta property="og:type" content="website">
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #ffffff;
+    --bg-alt: #f4f5f7;
+    --text: #1a1d21;
+    --text-muted: #55606c;
+    --border: #d8dce1;
+    --accent: #1d5fae;
+    --accent-contrast: #ffffff;
+    --badge-bg: #e4edfa;
+    --badge-text: #12447f;
+    --focus: #ff8a00;
+    --code-bg: #eef0f3;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #14171a;
+      --bg-alt: #1c2024;
+      --text: #eef1f4;
+      --text-muted: #a7b0ba;
+      --border: #333a41;
+      --accent: #6ba6f2;
+      --accent-contrast: #0b1320;
+      --badge-bg: #1c3151;
+      --badge-text: #bcd6fb;
+      --focus: #ffb454;
+      --code-bg: #20252a;
+    }
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.55;
+    padding-bottom: 3rem;
+  }
+
+  a { color: var(--accent); }
+  a:focus-visible, button:focus-visible, audio:focus-visible, [tabindex]:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+
+  .skip-link {
+    position: absolute;
+    left: -999px;
+    top: auto;
+    background: var(--accent);
+    color: var(--accent-contrast);
+    padding: 0.75rem 1.25rem;
+    border-radius: 0 0 8px 0;
+    z-index: 100;
+  }
+  .skip-link:focus {
+    left: 0;
+    top: 0;
+  }
+
+  header.hero {
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--border);
+    padding: 2.5rem 1.25rem 2rem;
+  }
+
+  .wrap {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 1.25rem;
+  }
+
+  header.hero .wrap { padding: 0; }
+
+  h1 {
+    font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.1rem);
+    line-height: 1.25;
+    margin: 0 0 0.75rem;
+  }
+
+  .authors {
+    margin: 0 0 0.25rem;
+    font-size: 1.05rem;
+  }
+
+  .affiliation {
+    margin: 0 0 1.25rem;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+  }
+
+  .link-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--accent-contrast);
+    text-decoration: none;
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+  .pill:hover, .pill:focus-visible { filter: brightness(1.08); }
+  .pill.secondary {
+    background: transparent;
+    color: var(--accent);
+    border: 1.5px solid var(--accent);
+  }
+
+  main { padding-top: 0.5rem; }
+
+  nav.toc {
+    max-width: 880px;
+    margin: 1.5rem auto 0;
+    padding: 0 1.25rem;
+  }
+  nav.toc ul {
+    list-style: none;
+    margin: 0;
+    padding: 0.85rem 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.1rem;
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  nav.toc a { text-decoration: none; font-size: 0.92rem; font-weight: 600; }
+  nav.toc a:hover { text-decoration: underline; }
+
+  section {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 2.25rem 1.25rem 0;
+    scroll-margin-top: 1rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+    border-bottom: 3px solid var(--accent);
+    display: inline-block;
+    padding-bottom: 0.15rem;
+    margin: 0 0 1rem;
+  }
+
+  h3 {
+    font-size: 1.05rem;
+    margin: 1.75rem 0 0.5rem;
+  }
+
+  p { margin: 0 0 1rem; }
+
+  .lead {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+  }
+
+  .note {
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    border-radius: 6px;
+    padding: 0.9rem 1.1rem;
+    font-size: 0.95rem;
+  }
+
+  code {
+    background: var(--code-bg);
+    padding: 0.1rem 0.35rem;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+  pre {
+    background: var(--code-bg);
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-size: 0.85rem;
+  }
+  pre code { background: none; padding: 0; }
+
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin: 0.75rem 0 0.35rem;
+  }
+  .table-wrap:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: -3px;
+  }
+
+  table {
+    width: 100%;
+    min-width: 460px;
+    border-collapse: collapse;
+  }
+
+  caption {
+    text-align: left;
+    font-weight: 600;
+    padding: 0.85rem 1rem 0.25rem;
+    caption-side: top;
+  }
+
+  thead th {
+    text-align: left;
+    background: var(--bg-alt);
+    padding: 0.7rem 1rem;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+  }
+
+  tbody th, tbody td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+  }
+  tbody th { text-align: left; font-weight: 600; white-space: nowrap; }
+  tbody tr:last-child th, tbody tr:last-child td { border-bottom: none; }
+
+  .cond-detail {
+    display: block;
+    font-weight: 400;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    white-space: normal;
+  }
+
+  .player-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 260px;
+  }
+
+  audio {
+    width: 100%;
+    max-width: 300px;
+    height: 36px;
+  }
+
+  .dl-link { font-size: 0.8rem; }
+
+  .badge {
+    display: inline-block;
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 0.18rem 0.5rem;
+    border-radius: 999px;
+    margin-left: 0.5rem;
+  }
+
+  .scroll-hint {
+    display: none;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin: 0 0 1.5rem;
+  }
+  @media (max-width: 700px) {
+    .scroll-hint { display: block; }
+  }
+
+  .back-to-top {
+    display: inline-block;
+    margin: 1rem 0 0;
+    font-size: 0.88rem;
+  }
+
+  footer {
+    max-width: 880px;
+    margin: 3rem auto 0;
+    padding: 1.5rem 1.25rem 0;
+    border-top: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+
+  ul.plain { padding-left: 1.2rem; }
+  ul.plain li { margin-bottom: 0.35rem; }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="hero">
+  <div class="wrap">
+    <h1 id="top">Low Latency Intelligibility Reduction of Distracting Conversations Using Granular Speech Maskers</h1>
+    <p class="authors">Modan Tailleur, Théo Chasle Cauchy, Mathieu Lagrange</p>
+    <p class="affiliation">Nantes Université, École Centrale Nantes, CNRS, LS2N, UMR&nbsp;6004, Nantes, France</p>
+    <div class="link-row">
+      <a class="pill" href="https://github.com/modantailleur/paperGranularSpeechMaskers">Code (GitHub)</a>
+      <a class="pill" href="https://zenodo.org/records/22687159">Datasets (Zenodo)</a>
+      <a class="pill" href="https://pypi.org/project/amods/0.1.0/">Demo package (PyPI)</a>
+      <a class="pill secondary" href="#citation">Citation</a>
+    </div>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Page sections">
+  <ul>
+    <li><a href="#abstract">Abstract</a></li>
+    <li><a href="#audio-reference">Reference audio</a></li>
+    <li><a href="#audio-vad">VAD threshold effect</a></li>
+    <li><a href="#audio-comparison">Comparison with baseline</a></li>
+    <li><a href="#audio-conditions">GranSpeechMask across EBR-SAR conditions</a></li>
+    <li><a href="#audio-delay">Buffering latency</a></li>
+    <li><a href="#audio-multispeaker">Multispeaker robustness</a></li>
+    <li><a href="#citation">Citation</a></li>
+  </ul>
+</nav>
+
+<main id="main">
+
+  <section id="abstract">
+    <h2>Abstract</h2>
+    <p>
+      Reducing the intelligibility of background speech, one of the most disruptive sources of noise
+      pollution in open-plan offices, is a challenge. Active noise cancellation techniques are challenged
+      by speech's rapid spectro-temporal variations, while static sound-masking systems must operate at
+      high levels to be effective, increasing overall noise exposure. We propose GranSpeechMask, a
+      low-latency granular speech-masking method that reduces the intelligibility of distracting speech by
+      broadcasting short segments of the target speaker's own recent speech. Unlike ANC, GranSpeechMask
+      does not require extremely low latency, and unlike static sound-masking systems, it dynamically
+      optimizes the level of the masking signal. Evaluated on monospeaker and multispeaker simulated
+      office speech datasets, GranSpeechMask substantially outperforms a speech-shaped-noise baseline and
+      demonstrates good robustness to multispeaker scenes.
+    </p>
+  </section>
+
+  <section id="audio-reference">
+    <h2>1. Reference audio across EBR–SAR conditions</h2>
+    <p>
+      These clips are the unprocessed reference audio for a single 1-minute speech-in-office scene, rendered at three Event-to-Background Ratio and Speech-to-Ambient Ratio (EBR–SAR) conditions used to build SOS-1SP. They
+      illustrate how much ambient office noise (typing, background chatter, room tone) is already present
+      before any speech concealer is added, from the quietest (Low) to the noisiest (High) condition.
+    </p>
+    <p class="scroll-hint">Tip: scroll the table sideways if it doesn't fit your screen.</p>
+    <div class="table-wrap" role="region" aria-label="Reference audio across EBR-SAR conditions" tabindex="0">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Condition</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">None - Low<span class="cond-detail">EBR −50&nbsp;dB / SAR −20&nbsp;dB</span><span class="cond-detail">p241</span></th>
+            <td>
+              <div class="player-cell">
+                <audio controls preload="none" src="audios/ovroraclelow.flac" aria-label="Reference audio, Low EBR-SAR condition, speaker p241">
+                  Your browser doesn't support inline audio playback.
+                  <a href="audios/ovroraclelow.flac">Download the audio file</a>.
+                </audio>
+                <a class="dl-link" href="audios/ovroraclelow.flac">Download (FLAC)</a>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">None - Mid<span class="cond-detail">EBR +12&nbsp;dB / SAR −10&nbsp;dB</span><span class="cond-detail">p241</span></th>
+            <td>
+              <div class="player-cell">
+                <audio controls preload="none" src="audios/ovroraclemid.flac" aria-label="Reference audio, Mid EBR-SAR condition, speaker p241">
+                  Your browser doesn't support inline audio playback.
+                  <a href="audios/ovroraclemid.flac">Download the audio file</a>.
+                </audio>
+                <a class="dl-link" href="audios/ovroraclemid.flac">Download (FLAC)</a>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">None - High<span class="cond-detail">EBR +3&nbsp;dB / SAR 0&nbsp;dB</span><span class="cond-detail">p241</span></th>
+            <td>
+              <div class="player-cell">
+                <audio controls preload="none" src="audios/ovroraclehigh.flac" aria-label="Reference audio, High EBR-SAR condition, speaker p241">
+                  Your browser doesn't support inline audio playback.
+                  <a href="audios/ovroraclehigh.flac">Download the audio file</a>.
+                </audio>
+                <a class="dl-link" href="audios/ovroraclehigh.flac">Download (FLAC)</a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <a class="back-to-top" href="#top">↑ Back to top</a>
+  </section>
+
+  <section id="audio-vad">
+    <h2>2. Effect of the VAD detection threshold</h2>
+    <p>
+        GranSpeechMask relies on a voice activity detector (VAD) 
+        to determine when to trigger concealing. Below a threshold of about 0.4, 
+        TEN VAD starts accepting non-speech audio as speech, causing the system 
+        to trigger concealing on non-speech segments and potentially select 
+        non-speech clips as concealers. A threshold of 0.5, used throughout the paper, 
+        lies on the Pareto front between intelligibility and 
+        emergence. Higher thresholds also provide acceptable performance. 
+        Compared with 0.5, a threshold of 0.9 reduces concealer emergence but 
+        also increases speech intelligibility.
+    </p>
+    <p class="scroll-hint">Tip: scroll the table sideways if it doesn't fit your screen.</p>
+    <div class="table-wrap" role="region" aria-label="Effect of the VAD detection threshold, Mid condition" tabindex="0">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Configuration</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">None<span class="cond-detail">Mid (EBR +12&nbsp;dB / SAR −10&nbsp;dB)</span><span class="cond-detail">p225</span></th>
+            <td>
+              <div class="player-cell">
+                <audio controls preload="none" src="audios/vadoraclemid.flac" aria-label="Reference audio, no concealer, Mid condition, speaker p225">
+                  Your browser doesn't support inline audio playback.
+                  <a href="audios/vadoraclemid.flac">Download the audio file</a>.
+                </audio>
+                <a class="dl-link" href="audios/vadoraclemid.flac">Download (FLAC)</a>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">TEN VAD, thr. 0.1<span class="cond-detail">Mid (EBR +12&nbsp;dB / SAR −10&nbsp;dB)</span><span class="cond-detail">p225</span></th>
+            <td>
+              <div class="player-cell">
+                <audio controls preload="none" src="audios/vadtenmid01.flac" aria-label="GranSpeechMask, TEN VAD threshold 0.1, Mid condition, speaker p225">
+                  Your browser doesn't support inline audio playback.
+                  <a href="audios/vadtenmid01.flac">Download the audio file</a>.
+                </audio>
+                <a class="dl-link" href="audios/vadtenmid01.flac">Download (FLAC)</a>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">TEN VAD, thr. 0.5<span class="cond-detail">Mid (EBR +12&nbsp;dB / SAR −10&nbsp;dB)</span><span class="cond-detail">p225</span></th>
+            <td>
+              <div class="player-cell">
+                <audio controls preload="none" src="audios/vadtenmid05.flac" aria-label="GranSpeechMask, TEN VAD threshold 0.5, Mid condition, speaker p225">
+                  Your browser doesn't support inline audio playback.
+                  <a href="audios/vadtenmid05.flac">Download the audio file</a>.
+                </audio>
+                <a class="dl-link" href="audios/vadtenmid05.flac">Download (FLAC)</a>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">TEN VAD, thr. 0.9<span class="cond-detail">Mid (EBR +12&nbsp;dB / SAR −10&nbsp;dB)</span><span class="cond-detail">p225</span></th>
+            <td>
+              <div class="player-cell">
+                <audio controls preload="none" src="audios/vadtenmid09.flac" aria-label="GranSpeechMask, TEN VAD threshold 0.9, Mid condition, speaker p225">
+                  Your browser doesn't support inline audio playback.
+                  <a href="audios/vadtenmid09.flac">Download the audio file</a>.
+                </audio>
+                <a class="dl-link" href="audios/vadtenmid09.flac">Download (FLAC)</a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <a class="back-to-top" href="#top">↑ Back to top</a>
+  </section>
+
+  <section id="audio-comparison">
+    <h2>3. Comparison to SSN baseline</h2>
+    <p>
+        At the Mid EBR–SAR condition, GranSpeechMask is compared with the
+        speech-shaped-noise (SSN) baseline.
+        SSN introduces a constant, speech-shaped noise throughout the clip, whereas
+        GranSpeechMask conceals speech selectively by detecting speech activity and
+        replaying short segments of the speaker's own recent voice.
+    </p>
+    <p class="scroll-hint">Tip: scroll the table sideways if it doesn't fit your screen.</p>
+    <div class="table-wrap" role="region" aria-label="Method comparison at Mid condition" tabindex="0">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Method</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">None<span class="cond-detail">Mid (EBR +12&nbsp;dB / SAR −10&nbsp;dB)</span><span class="cond-detail">p241</span></th>
+            <td>
+              <div class="player-cell">
+                <audio controls preload="none" src="audios/ovroraclemid.flac" aria-label="Reference audio, no concealer, Mid condition, speaker p241">
+                  Your browser doesn't support inline audio playback.
+                  <a href="audios/ovroraclemid.flac">Download the audio file</a>.
+                </audio>
+                <a class="dl-link" href="audios/ovroraclemid.flac">Download (FLAC)</a>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">SSN<span class="cond-detail">Mid (EBR +12&nbsp;dB / SAR −10&nbsp;dB)</span><span class="cond-detail">p241</span></th>
+            <td>
+              <div class="player-cell">
+                <audio controls preload="none" src="audios/ovrssnmid05.flac" aria-label="Speech-shaped noise baseline, Mid condition, speaker p241">
+                  Your browser doesn't support inline audio playback.
+                  <a href="audios/ovrssnmid05.flac">Download the audio file</a>.
+                </audio>
+                <a class="dl-link" href="audios/ovrssnmid05.flac">Download (FLAC)</a>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">GranSpeechMask (Ours)<span class="cond-detail">Mid (EBR +12&nbsp;dB / SAR −10&nbsp;dB)</span><span class="cond-detail">p241</span></th>
+            <td>
+              <div class="player-cell">
+                <audio controls preload="none" src="audios/ovroursmid05.flac" aria-label="GranSpeechMask, Mid condition, speaker p241">
+                  Your browser doesn't support inline audio playback.
+                  <a href="audios/ovroursmid05.flac">Download the audio file</a>.
+                </audio>
+                <a class="dl-link" href="audios/ovroursmid05.flac">Download (FLAC)</a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <a class="back-to-top" href="#top">↑ Back to top</a>
+  </section>
+
+  <section id="audio-conditions">
+    <h2>4. GranSpeechMask across EBR–SAR conditions</h2>
+    <p>
+    GranSpeechMask is applied at all three EBR–SAR conditions, using the same speaker
+    and a TEN&nbsp;VAD threshold of 0.5 throughout. Concealing performance remains
+    consistent across ambient noise levels.
+    </p>
+    <p class="scroll-hint">Tip: scroll the table sideways if it doesn't fit your screen.</p>
+    <div class="table-wrap" role="region" aria-label="GranSpeechMask across EBR-SAR conditions" tabindex="0">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Condition</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">GranSpeechMask - Low<span class="cond-detail">EBR −50&nbsp;dB / SAR −20&nbsp;dB</span><span class="cond-detail">p241</span></th>
+            <td>
+              <div class="player-cell">
+                <audio controls preload="none" src="audios/ovrourslow05.flac" aria-label="GranSpeechMask, Low EBR-SAR condition, speaker p241">
+                  Your browser doesn't support inline audio playback.
+                  <a href="audios/ovrourslow05.flac">Download the audio file</a>.
+                </audio>
+                <a class="dl-link" href="audios/ovrourslow05.flac">Download (FLAC)</a>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">GranSpeechMask - Mid<span class="cond-detail">EBR +12&nbsp;dB / SAR −10&nbsp;dB</span><span class="cond-detail">p241</span></th>
+            <td>
+              <div class="player-cell">
+                <audio controls preload="none" src="audios/ovroursmid05.flac" aria-label="GranSpeechMask, Mid EBR-SAR condition, speaker p241">
+                  Your browser doesn't support inline audio playback.
+                  <a href="audios/ovroursmid05.flac">Download the audio file</a>.
+                </audio>
+                <a class="dl-link" href="audios/ovroursmid05.flac">Download (FLAC)</a>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">GranSpeechMask - High<span class="cond-detail">EBR +3&nbsp;dB / SAR 0&nbsp;dB</span><span class="cond-detail">p241</span></th>
+            <td>
+              <div class="player-cell">
+                <audio controls preload="none" src="audios/ovrourshigh05.flac" aria-label="GranSpeechMask, High EBR-SAR condition, speaker p241">
+                  Your browser doesn't support inline audio playback.
+                  <a href="audios/ovrourshigh05.flac">Download the audio file</a>.
+                </audio>
+                <a class="dl-link" href="audios/ovrourshigh05.flac">Download (FLAC)</a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <a class="back-to-top" href="#top">↑ Back to top</a>
+  </section>
+
+  <section id="audio-delay">
+    <h2>5. Effect of buffering latency</h2>
+    <p>
+      GranSpeechMask can be used with buffering latencies of up to 350&nbsp;ms without a
+      noticeable drop in performance. The following clips illustrate the effect of
+      buffering latency on the Mid EBR–SAR condition.
+    </p>
+    <p class="scroll-hint">Tip: scroll the table sideways if it doesn't fit your screen.</p>
+    <div class="table-wrap" role="region" aria-label="Effect of buffering latency, Mid condition" tabindex="0">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Latency</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">0&nbsp;ms<span class="cond-detail">Mid (EBR +12&nbsp;dB / SAR −10&nbsp;dB)</span><span class="cond-detail">p241</span></th>
+            <td>
+              <div class="player-cell">
+                <audio controls preload="none" src="audios/delay-50mid.flac" aria-label="GranSpeechMask, -50 ms delay, Mid condition, speaker p241">
+                  Your browser doesn't support inline audio playback.
+                  <a href="audios/delay-50mid.flac">Download the audio file</a>.
+                </audio>
+                <a class="dl-link" href="audios/delay-50mid.flac">Download (FLAC)</a>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">350&nbsp;ms<span class="cond-detail">Mid (EBR +12&nbsp;dB / SAR −10&nbsp;dB)</span><span class="cond-detail">p241</span></th>
+            <td>
+              <div class="player-cell">
+                <audio controls preload="none" src="audios/delay300mid.flac" aria-label="GranSpeechMask, 300 ms delay, Mid condition, speaker p241">
+                  Your browser doesn't support inline audio playback.
+                  <a href="audios/delay300mid.flac">Download the audio file</a>.
+                </audio>
+                <a class="dl-link" href="audios/delay300mid.flac">Download (FLAC)</a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <a class="back-to-top" href="#top">↑ Back to top</a>
+  </section>
+
+  <section id="audio-multispeaker">
+    <h2>6. Multispeaker robustness</h2>
+    <p>
+        GranSpeechMask is evaluated on <em>SOS-2SP</em>, a two-speaker pseudo-conversation
+        dataset, at the Mid EBR–SAR condition. The SPI Oracle variant forces the concealer
+        to be selected from the correct speaker's past speech using ground-truth speaker
+        identity, whereas GranSpeechMask selects concealers solely based on log-Mel
+        spectral similarity, without knowing which speaker is currently speaking. The
+        performance gap between the two approaches is small overall, but informal listening suggests
+        that the SPI Oracle seem to perform 
+        better in terms of naturalness. 
+    </p>
+    <p class="scroll-hint">Tip: scroll the table sideways if it doesn't fit your screen.</p>
+    <div class="table-wrap" role="region" aria-label="Multispeaker robustness, Mid condition" tabindex="0">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Method</th>
+            <th scope="col">Speaker pair</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">SPI Oracle<span class="cond-detail">Mid (EBR +12&nbsp;dB / SAR −10&nbsp;dB)</span></th>
+            <td>Different-gender<span class="cond-detail">p225–p226</span></td>
+            <td>
+              <div class="player-cell">
+                <audio controls preload="none" src="audios/multidiffgenoraclemid.flac" aria-label="SPI Oracle, different-gender pair p225-p226, Mid condition">
+                  Your browser doesn't support inline audio playback.
+                  <a href="audios/multidiffgenoraclemid.flac">Download the audio file</a>.
+                </audio>
+                <a class="dl-link" href="audios/multidiffgenoraclemid.flac">Download (FLAC)</a>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">GranSpeechMask (Ours)<span class="cond-detail">Mid (EBR +12&nbsp;dB / SAR −10&nbsp;dB)</span></th>
+            <td>Different-gender<span class="cond-detail">p225–p226</span></td>
+            <td>
+              <div class="player-cell">
+                <audio controls preload="none" src="audios/multidiffgenmid.flac" aria-label="GranSpeechMask, different-gender pair p225-p226, Mid condition">
+                  Your browser doesn't support inline audio playback.
+                  <a href="audios/multidiffgenmid.flac">Download the audio file</a>.
+                </audio>
+                <a class="dl-link" href="audios/multidiffgenmid.flac">Download (FLAC)</a>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">GranSpeechMask (Ours)<span class="cond-detail">Mid (EBR +12&nbsp;dB / SAR −10&nbsp;dB)</span></th>
+            <td>Same-gender<span class="cond-detail">p229–p230</span></td>
+            <td>
+              <div class="player-cell">
+                <audio controls preload="none" src="audios/multisamegenmid.flac" aria-label="GranSpeechMask, same-gender pair p229-p230, Mid condition">
+                  Your browser doesn't support inline audio playback.
+                  <a href="audios/multisamegenmid.flac">Download the audio file</a>.
+                </audio>
+                <a class="dl-link" href="audios/multisamegenmid.flac">Download (FLAC)</a>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <a class="back-to-top" href="#top">↑ Back to top</a>
+  </section>
+
+  <section id="citation">
+    <h2>Citation</h2>
+    <p>Citation details (venue, year, DOI) will be added once available. 
+    <pre><code>@inproceedings{tailleur2026granspeechmask,
+  title     = {Low Latency Intelligibility Reduction of Distracting Conversations Using Granular Speech Maskers},
+  author    = {Tailleur, Modan and Chasle Cauchy, Th{\'e}o and Lagrange, Mathieu},
+  booktitle = {TBD},
+  year      = {2026}
+}</code></pre>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap" style="padding:0;">
+    <p>
+      Nantes Université, École Centrale Nantes, CNRS, LS2N, UMR&nbsp;6004, Nantes, France.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>

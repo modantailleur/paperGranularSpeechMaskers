@@ -1,0 +1,3 @@
+vad_type: webrtc
+logit_threshold: 0.99
+aggressiveness: 3

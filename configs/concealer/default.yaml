@@ -1,0 +1,10 @@
+concealer_type: list_reverse_denoised
+concealer_vad_config: ten_concealer.yaml
+shortlist_maxlen: 100
+max_countdown_reuse: 10  # in number of uses
+max_concealer_distance_to_buffer: 5  # in number of concealers
+concealer_duration: 0.300
+concealing_ratio_min_timeout_duration: 0.60
+concealing_ratio_max_timeout_duration: 1.0
+fade_duration: 0.050
+quality_threshold: 2.0  # DNSMOS score threshold for accepting concealers (None to disable quality check)

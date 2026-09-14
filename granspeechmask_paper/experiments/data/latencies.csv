@@ -1,0 +1,6 @@
+,WebRTC + Mel + Cosine,Silero + Mel + Cosine,Ten + Mel + Cosine
+11th Gen Intel(R) Core(TM) i7-1185G7 @ 3.00GHz,"1,087","1,468","1,527"
+Apple M2 Architecture: arm64 Physical cores: 8 Logical cores: 8 OS: Darwin 24.6.0,"0,657","0,79","1,232"
+Intel(R) Core(TM) m7-6Y75 CPU @ 1.20GHz Architecture: x86_64 Physical cores: 2,"4,444","5,745","6,257"
+Intel(R) Core(TM) Ultra 7 165H Architecture: x86_64 Physical cores: 16 Logical,"1,276","1,83","1,75"
+Average,"1,866","2,45825","2,6915"

@@ -1,0 +1,8 @@
+concealer_type: ttslist
+concealer_vad_config: default_concealer.yaml
+shortlist_maxlen: 100
+max_countdown_reuse: 100  # number of buffers before possible to reuse same concealer
+max_concealer_distance_to_buffer: 10  # in number of concealers
+concealing_ratio_min_timeout_duration: 0.20
+concealing_ratio_max_timeout_duration: 0.50
+fade_ratio_duration: 0.10

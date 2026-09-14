@@ -1,0 +1,9 @@
+concealer_type: asr
+concealer_vad_config: default_concealer.yaml
+shortlist_maxlen: 100
+max_countdown_reuse: 10  # in number of uses
+max_concealer_distance_to_buffer: 10  # in number of concealers
+concealer_duration: 0.150
+concealing_min_timeout_duration: 0.050
+concealing_max_timeout_duration: 0.150
+fade_duration: 0.060
